@@ -15,7 +15,14 @@ namespace TrybeHotel.Services
         // 11. Desenvolva o endpoint GET /geo/status
         public async Task<object> GetGeoStatus()
         {
-            throw new NotImplementedException();
+            HttpResponseMessage response = await _client.GetAsync("https://nominatim.openstreetmap.org/status.php?format=json"); 
+
+            if(response.IsSuccessStatusCode)
+            {
+                var geoStatus = await response.Content.ReadAsStringAsync();
+                return geoStatus;
+            }
+            throw new Exception("Something went wrong :(");
         }
         
         // 12. Desenvolva o endpoint GET /geo/address
